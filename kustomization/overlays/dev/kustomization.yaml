@@ -1,0 +1,28 @@
+namePrefix: dev-
+commonLabels:
+  env: dev
+patches:
+- path: new-image.yaml
+  target:
+    kind: Deployment
+    name: flask-deployment
+- path: new-image-2.yaml
+  target:
+    kind: Deployment
+    name: flask-deployment-two
+- op: replace
+  path: service.yaml
+  target:
+    kind: Service
+    name: frontend-service
+images:
+- name: 389099493521.dkr.ecr.eu-central-1.amazonaws.com/flask-app
+  newName: nginx
+  newTag: latest
+- name: nginx
+  newName: nginx
+  newTag: 1.20.1
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
