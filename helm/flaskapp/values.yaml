@@ -1,7 +1,7 @@
 deployment:
   name: flaskapp
   replicas: 2
-  image: 837347534425.dkr.ecr.us-east-1.amazonaws.com/flaskapp
+  image: 564731541479.dkr.ecr.eu-central-1.amazonaws.com/flaskapp
   tag: latest
   port: 5000
 
