@@ -14,23 +14,23 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] 
 }
 
-resource "aws_instance" "flaskapp-host" {
+resource "aws_instance" "jenkins" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
-#   key_name 	                  = aws_key_pair.deployer-with-ssh.key_name
   security_groups             = [aws_security_group.ubuntu.name]
   associate_public_ip_address = true
   user_data                   = file("jenkins_install.sh")
+  vpc_security_group_ids      = [aws_security_group.ubuntu.id]
+  # subnet_id                   = [aws_subnet.main.id]
   tags = {
      Name = "ec-2-Jenkins"
   }
-  depends_on = [aws_instance.flaskapp-host]
 }
 
 resource "aws_security_group" "ubuntu" {
   name        = "ubuntu-security-group"
   description = "Allow HTTP, HTTPS and SSH traffic"
-
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     description = "HTTPS"
