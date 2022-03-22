@@ -21,7 +21,7 @@ resource "aws_instance" "jenkins" {
   associate_public_ip_address = true
   user_data                   = file("jenkins_install.sh")
   vpc_security_group_ids      = [aws_security_group.ubuntu.id]
-  # subnet_id                   = [aws_subnet.main.id]
+  subnet_id                   = aws_subnet.main.id
   tags = {
      Name = "ec-2-Jenkins"
   }
