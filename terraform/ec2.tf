@@ -20,7 +20,7 @@ resource "aws_instance" "jenkins" {
   associate_public_ip_address = true
   user_data                   = file("jenkins_install.sh")
   vpc_security_group_ids      = [aws_security_group.ubuntu.id]
-  subnet_id                   = aws_subnet.main.id
+  subnet_id                   = module.vpc.public_subnets[0]
   tags = {
      Name = "ec-2-Jenkins"
   }
@@ -29,7 +29,7 @@ resource "aws_instance" "jenkins" {
 resource "aws_security_group" "ubuntu" {
   name        = "ubuntu-security-group"
   description = "Allow HTTP, HTTPS and SSH traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = module.vpc.vpc_id
 
   ingress {
     description = "HTTPS"
