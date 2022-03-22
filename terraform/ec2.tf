@@ -17,7 +17,6 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "jenkins" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
-  security_groups             = [aws_security_group.ubuntu.name]
   associate_public_ip_address = true
   user_data                   = file("jenkins_install.sh")
   vpc_security_group_ids      = [aws_security_group.ubuntu.id]
