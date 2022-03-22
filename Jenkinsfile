@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Push') {
             steps {
-                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 564731541479.dkr.ecr.eu-central-1.amazonaws.com/flaskapp'
+                sh 'aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 564731541479.dkr.ecr.eu-central-1.amazonaws.com/flaskapp'
                 sh 'docker push 564731541479.dkr.ecr.eu-central-1.amazonaws.com/flaskapp:$GIT_COMMIT'
             }
         }
